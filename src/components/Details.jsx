@@ -18,26 +18,30 @@ const Details = ({invoice}) => {
 
     return (
         <div className="bg-slate-800 rounded-lg p-8">
-            <div className="flex flex-wrap items-center justify-end space-x-4 mb-8">
-                <button onClick={handleEdit} className="px-6 py-3 rounded-full bg-slate-700 hover:bg-slate-600">
-                    Edit
-                </button>
+            <div className="flex space-y-4 flex-wrap grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center justify-end space-x-4 mb-8">
+                <div className="col-span-1">
+                    <button onClick={handleEdit} className="w-full px-6 py-3 rounded-full bg-slate-700 hover:bg-slate-600">
+                        Edit
+                    </button>
+                </div>
 
-                <PDFDownloadLink document={<PDF invoice={invoice} name="Albiona" />} fileName={`${invoice.client}.pdf`}
-                    className="px-6 py-3 rounded-full bg-violet-500 hover:bg-violet-600">
-                        {({ blob, url, loading, error }) => (
-                            <span className="flex items-center space-x-2">
+                <PDFDownloadLink document={<PDF invoice={invoice} />} fileName={`${invoice.client}.pdf`}
+                    className="w-full text-center col-span-1 px-6 py-3 rounded-full bg-slate-700 hover:bg-blue-900">
+                        {({ loading }) => (
+                            <span className="flex text-center justify-center items-center space-x-2">
                                 <Download size={20} className="me-2" />
                                 {loading ? 'Loading...' : 'Download'}
                             </span>
                         )}
                 </PDFDownloadLink>
 
-                <button onClick={handleDelete} className="px-6 py-3 rounded-full bg-red-500 hover:bg-red-600">
-                    Delete
-                </button>
+                <div className="col-span-1">
+                    <button onClick={handleDelete} className="w-full space-x-4 px-6 py-3 rounded-full bg-red-500 hover:bg-red-600">
+                        Delete
+                    </button>
+                </div>
 
-                <div>
+                <div className="col-span-1 order-first lg:order-last flex justify-end mb-3">
                     <button onClick={() => dispatch(selectInvoice(null))} className="px-3 py-3 rounded-full bg-red-500 hover:bg-red-600">
                         <X size={25} />
                     </button>
@@ -45,16 +49,16 @@ const Details = ({invoice}) => {
             </div>
 
             <div className="bg-slate-900 rounded-lg p-8">
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-wrap space-y-4 items-center justify-between mb-8">
                     <div>
                         <h2 className="text-xl font-bold md-2">{invoice.id}</h2>
-                        {invoice.description && <span className="text-slate-400">{invoice.description}</span>}
+                        {invoice.description && <p className="text-slate-400 overflow-auto break-all">{invoice.description}</p>}
                     </div>
 
                     <div className="text-right text-slate-400">
-                        <p>{invoice.billing.address}</p>
-                        <p>{invoice.billing.city}</p>
-                        <p>{invoice.billing.country}</p>
+                        <p>{invoice.billTo.address}</p>
+                        <p>{invoice.billTo.city}</p>
+                        <p>{invoice.billTo.country}</p>
                     </div>
                 </div>
 
@@ -94,8 +98,8 @@ const Details = ({invoice}) => {
                                     <tr className="text-white" key={i.id}>
                                         <td className="text-left">{i.name}</td>
                                         <td className="text-center">{i.quantity}</td>
-                                        <td className="text-right">${i.price.toFixed(2)}</td>
-                                        <td className="text-right">${i.total.toFixed(2)}</td>
+                                        <td className="text-right">{i.price.toFixed(2)}€</td>
+                                        <td className="text-right">{i.total.toFixed(2)}€</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -104,7 +108,7 @@ const Details = ({invoice}) => {
 
                     <div className="bg-slate-900 p-8 flex space-x-4 items-center justify-between overflow-auto">
                         <span className="text-white">Total Amount</span>
-                        <span className="text-xl font-bold">${invoice.amount.toFixed(2)}</span>
+                        <span className="text-xl font-bold">{invoice.amount.toFixed(2)}€</span>
                     </div>
                 </div>
             </div>

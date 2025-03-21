@@ -1,4 +1,4 @@
-import { Document, Page, View, Text, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, View, Text, StyleSheet, Image } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 
 const styles = StyleSheet.create({
@@ -31,38 +31,41 @@ const styles = StyleSheet.create({
     },
     table: {
         width: "100%",
-        borderWidth: 1,
-        borderColor: "#000",
         marginTop: 10,
     },
     tableRow: {
         flexDirection: "row",
         borderBottomWidth: 1,
         borderBottomColor: "#000",
-        paddingVertical: 5,
+        paddingVertical: 10,
     },
     tableHeader: {
         fontWeight: "bold",
-        backgroundColor: "#ddd",
+        backgroundColor: "#fff",
     },
     tableCell: {
         flex: 1,
         textAlign: "center",
-    },
-    footer: {
-        marginTop: 20,
-        textAlign: "right",
     },
     subtitle: {
         fontSize: 14,
         fontWeight: "bold",
         marginBottom: 15,
     },
+    footer: {
+        textAlign: "right"
+    },
     detailsContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "flex-end",
-        marginBottom: 5,
+        margin: 5
+    },
+    totalDetails: {
+        display: "flex",
+        alignItems: "flex-end",
+        padding: 10,
+        margin: 15,
     }
 });
 
@@ -80,6 +83,7 @@ const PDF = ({ invoice }) => {
             <Page size="A4" style={styles.page}>
                 <View style={styles.header}>
                     <View>
+                        {invoice.logo && <Image src={invoice.logo} style={{ width: 70, height: 70 }} />}
                         <Text style={styles.companyInfo}>{invoice.billing.name}</Text>
                     </View>
                     <Text style={styles.invoiceTitle}>INVOICE</Text>
@@ -112,21 +116,21 @@ const PDF = ({ invoice }) => {
                         <View key={index} style={styles.tableRow}>
                             <Text style={styles.tableCell}>{item.name}</Text>
                             <Text style={styles.tableCell}>{item.quantity}</Text>
-                            <Text style={styles.tableCell}>${item.price.toFixed(2)}</Text>
-                            <Text style={styles.tableCell}>${item.total.toFixed(2)}</Text>
+                            <Text style={styles.tableCell}>{item.price.toFixed(2)}€</Text>
+                            <Text style={styles.tableCell}>{item.total.toFixed(2)}€</Text>
                         </View>
                     ))}
                 </View>
 
-                <View style={styles.footer}>
+                <View style={styles.totalDetails}>
                     {invoice.tax > 0 && 
                         <>
-                            <Text>Sub-total: ${calculateSubTotal()}</Text>
-                            <Text>Tax: ${calculateTax()}</Text>
+                            <Text>Sub-total: {calculateSubTotal().toFixed(2)}€</Text>
+                            <Text>Tax: {calculateTax().toFixed(2)}€</Text>
                         </>
                     }
 
-                    <Text style={{ fontSize: 14, fontWeight: "bold" }}>Total: ${invoice.amount.toFixed(2)}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold'}}>Total: {invoice.amount.toFixed(2)}€</Text>
                 </View>
             </Page>
         </Document>

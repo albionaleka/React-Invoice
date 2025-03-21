@@ -19,7 +19,7 @@ const Invoices = () => {
     }
 
     return (
-        <div className="w-full space-y-4 p-2">
+        <div className="w-full space-x-4 space-y-4 p-2">
             {invoices.map(invoice => (
                 <div key={invoice.id} onClick={() => handleSelect(invoice)} className="bg-slate-800 overflow-auto p-6 rounded flex flex-wrap @3xl:flex-wrap items-center justify-between hover:bg-slate-700 cursor-pointer">
                     <div className="flex items-center space-x-6">
@@ -29,9 +29,8 @@ const Invoices = () => {
                     </div>
 
                     <div className="flex items-center space-x-6">
-                        <span className="text-xl font-bold">${invoice.amount.toFixed(2) || 0.00}</span>
-                        
-                        <ChevronRight className="container text-violet-500" />
+                        <span className="text-xl font-bold">{invoice.amount.toFixed(2) || 0.00}€</span>
+                        <ChevronRight className="container text-rose-500" />
                     </div>
                 </div>
             ))} 

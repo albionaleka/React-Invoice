@@ -1,5 +1,5 @@
 import { Plus, Trash2, X } from "lucide-react"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleForm, addInvoice, updateInvoice } from "../store/slice";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -15,7 +15,6 @@ const InvoiceForm = ({ invoice }) => {
         
         return {
             id: `#${uuidv4().slice(0, 8)}`,
-            status: "pending",
             billing: {
                 name: "",
                 address: "",
@@ -32,7 +31,8 @@ const InvoiceForm = ({ invoice }) => {
             date: dayjs().format("YYYY-MM-DD"),
             amount: 0,
             items: [],
-            tax: 0
+            tax: 0,
+            logo: ""
         }
     });
 
@@ -88,12 +88,21 @@ const InvoiceForm = ({ invoice }) => {
 
         if (invoice) {
             dispatch(updateInvoice(form));
-            dispatch(toggleForm());
         } else {
             dispatch(addInvoice(form));
-            dispatch(toggleForm());
         }
     }
+
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setForm({ ...form, logo: reader.result });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-start justify-center overflow-y-auto">
@@ -108,7 +117,11 @@ const InvoiceForm = ({ invoice }) => {
 
                 <form className="space-y-6">
                     <div>
-                        <h3 className="text-violet-500 font-bold mb-4">Billing Info</h3>
+                        <h3 className="text-rose-500 font-bold mb-4">Billing Info</h3>
+                        
+                        <input type="file" className="bg-slate-900 w-full rounded-lg p-3 mb-4"
+                            onChange={handleFileChange} />
+
                         <input type="text" placeholder="Company Name" required className="bg-slate-900 w-full rounded-lg p-3 mb-4" value={form.billing.name} 
                             onChange={e => setForm({
                                 ...form, 
@@ -128,7 +141,7 @@ const InvoiceForm = ({ invoice }) => {
                             })} />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4">                  
                         <input type="text" placeholder="Email" required className="bg-slate-900 w-full rounded-lg p-3" value={form.billing.email}
                             onChange={e => setForm({
                                 ...form, 
@@ -149,7 +162,7 @@ const InvoiceForm = ({ invoice }) => {
                     </div>
 
                     <div className="space-y-4">
-                        <h3 className="text-violet-500 font-bold">Client Details</h3>
+                        <h3 className="text-rose-500 font-bold">Client Details</h3>
                         <input type="text" placeholder="Name" required className="bg-slate-900 w-full rounded-lg p-3" value={form.client}
                             onChange={e => setForm({
                                 ...form,
@@ -203,7 +216,7 @@ const InvoiceForm = ({ invoice }) => {
                     </div>
 
                     <div className="space-y-4">
-                        <h3 className="text-violet-500 font-bold">Item List</h3>
+                        <h3 className="text-rose-500 font-bold">Item List</h3>
                         
                         {form.items.map((item, index) => (
                             <div key={index} className="grid grid-cols-12 gap-4 items-center">
@@ -217,7 +230,7 @@ const InvoiceForm = ({ invoice }) => {
                                     onChange={e => updateItems(index, 'price', parseFloat(e.target.value))} />
 
                                 <div className="col-span-2 text-right">
-                                    {item.total.toFixed(2)}$
+                                    {item.total.toFixed(2)}€
                                 </div>
 
                                 <button type="button" onClick={() => deleteItem(index)} className="col-span-1 text-slate-400 hover:text-red-500">

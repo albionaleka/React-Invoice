@@ -8,7 +8,8 @@ const loadState = () => {
             return {
                 invoices: [],
                 formOpen: false,
-                selectedInvoice: null
+                infoOpen: false,
+                selectedInvoice: null,
             };
         }
 
@@ -18,7 +19,8 @@ const loadState = () => {
         return {
             invoices: [],
             formOpen: false,
-            selectedInvoice: null
+            infoOpen: false,
+            selectedInvoice: null,
         };
     }
 }
@@ -45,8 +47,7 @@ const slice = createSlice({
         addInvoice: (state, action) => {
             const newInvoice = {
                 ...action.payload,
-                amount: calculateAmount(action.payload.items),
-                status: action.payload.status || 'pending',
+                amount: calculateAmount(action.payload.items)
             };
 
             state.invoices.push(newInvoice);
@@ -89,10 +90,14 @@ const slice = createSlice({
             state.selectedInvoice = null;
             state.formOpen = false;
             saveState(state);
+        },
+
+        toggleInfo: (state) => {
+            state.infoOpen = !state.infoOpen;
         }
     }
 });
 
-export const { toggleForm, addInvoice, selectInvoice, deleteInvoice, updateInvoice } = slice.actions;
+export const { toggleForm, addInvoice, selectInvoice, deleteInvoice, updateInvoice, toggleInfo } = slice.actions;
 
 export default slice.reducer;
