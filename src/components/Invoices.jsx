@@ -21,7 +21,7 @@ const Invoices = () => {
     return (
         <div className="w-full space-x-4 space-y-4 p-2">
             {invoices.map(invoice => (
-                <div key={invoice.id} onClick={() => handleSelect(invoice)} className="bg-slate-800 overflow-auto p-6 rounded flex flex-wrap @3xl:flex-wrap items-center justify-between hover:bg-slate-700 cursor-pointer">
+                <div key={invoice.id} onClick={() => handleSelect(invoice)} className="w-full bg-slate-800 overflow-auto p-6 rounded flex flex-wrap @3xl:flex-wrap items-center justify-between hover:bg-slate-700 cursor-pointer">
                     <div className="flex items-center space-x-6">
                         <span className="text-slate-400">{invoice.id}</span>
                         <span className="text-slate-400">{invoice.date}</span>

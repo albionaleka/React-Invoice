@@ -12,9 +12,9 @@ const Header = ({ onNewInvoice, onInfo }) => {
             </div>
 
             <div className="flex items-center">
-                <button onClick={onNewInvoice} className="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-full flex items-center space-x-4">
-                    <Plus size={20} />
-                    <span>New Invoice</span>
+                <button onClick={onNewInvoice} className="bg-rose-500 hover:bg-rose-600 text-white px-2 md:px-6 py-2 rounded-full flex items-center md:space-x-4">
+                    <Plus size={25} />
+                    <span className="hidden md:inline">New Invoice</span>
                 </button>
             </div>
         </header>

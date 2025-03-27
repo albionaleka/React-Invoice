@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { deleteInvoice, selectInvoice, toggleForm } from "../store/slice";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDF from "./PDF";
-import { Download, X } from "lucide-react";
+import { Download, FilePenLine, Trash2, X } from "lucide-react";
 
 const Details = ({invoice}) => {
     const dispatch = useDispatch();
@@ -17,31 +17,33 @@ const Details = ({invoice}) => {
     }
 
     return (
-        <div className="bg-slate-800 rounded-lg p-8">
-            <div className="flex space-y-4 flex-wrap grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center justify-end space-x-4 mb-8">
-                <div className="col-span-1">
-                    <button onClick={handleEdit} className="w-full px-6 py-3 rounded-full bg-slate-700 hover:bg-slate-600">
-                        Edit
+        <div className="bg-slate-800 rounded-lg p-3 md:p-8">
+            <div className="flex items-center justify-end space-x-2 md:space-x-4 mb-8">
+                <div className="flex items-center">
+                    <button onClick={handleEdit} className="text-center justify-center md:space-x-4 flex items-center md:px-6 py-3 px-3 rounded-full bg-slate-700 hover:bg-slate-600">
+                        <FilePenLine size={25} />
+                        <span className="hidden md:inline">Edit</span>
                     </button>
                 </div>
 
                 <PDFDownloadLink document={<PDF invoice={invoice} />} fileName={`${invoice.client}.pdf`}
-                    className="w-full text-center col-span-1 px-6 py-3 rounded-full bg-slate-700 hover:bg-blue-900">
+                    className="text-center md:px-6 px-3 py-3 rounded-full bg-slate-700 hover:bg-blue-900">
                         {({ loading }) => (
-                            <span className="flex text-center justify-center items-center space-x-2">
-                                <Download size={20} className="me-2" />
-                                {loading ? 'Loading...' : 'Download'}
+                            <span className="flex text-center justify-center items-center md:space-x-2">
+                                <Download size={25} />
+                                <span className="hidden md:inline">{loading ? 'Loading...' : 'Download'}</span>
                             </span>
                         )}
                 </PDFDownloadLink>
 
-                <div className="col-span-1">
-                    <button onClick={handleDelete} className="w-full space-x-4 px-6 py-3 rounded-full bg-red-500 hover:bg-red-600">
-                        Delete
+                <div className="">
+                    <button onClick={handleDelete} className="md:space-x-4 flex items-center md:px-6 px-3 py-3 rounded-full bg-red-500 hover:bg-red-600">
+                        <Trash2 size={25} />
+                        <span className="hidden md:inline">Delete</span>
                     </button>
                 </div>
 
-                <div className="col-span-1 order-first lg:order-last flex justify-end mb-3">
+                <div className="flex justify-end">
                     <button onClick={() => dispatch(selectInvoice(null))} className="px-3 py-3 rounded-full bg-red-500 hover:bg-red-600">
                         <X size={25} />
                     </button>

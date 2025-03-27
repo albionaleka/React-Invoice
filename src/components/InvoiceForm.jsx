@@ -1,5 +1,5 @@
 import { Plus, Trash2, X } from "lucide-react"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleForm, addInvoice, updateInvoice } from "../store/slice";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 
 const InvoiceForm = ({ invoice }) => {
     const dispatch = useDispatch();
+    const { invoices } = useSelector((state) => state.invoices);
 
     const [form, setForm] = useState(() => {
         if (invoice) {
@@ -35,6 +36,22 @@ const InvoiceForm = ({ invoice }) => {
             logo: ""
         }
     });
+
+    useEffect(() => {
+        if (invoices.length > 0) {
+            const last = invoices[invoices.length - 1];
+    
+            setForm((prevForm) => ({
+                ...prevForm,
+                billing: {
+                    name: last.billing.name,
+                    address: last.billing.address,
+                    email: last.billing.email,
+                    number: last.billing.number
+                }
+            }));
+        }
+    }, [invoices]);
 
     useEffect(() => {
         if (invoice) {
