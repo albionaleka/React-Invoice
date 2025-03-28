@@ -21,11 +21,11 @@ const Invoices = () => {
     return (
         <div className="w-full space-x-4 space-y-4 p-2">
             {invoices.map(invoice => (
-                <div key={invoice.id} onClick={() => handleSelect(invoice)} className="w-full bg-slate-800 overflow-auto p-6 rounded flex flex-wrap @3xl:flex-wrap items-center justify-between hover:bg-slate-700 cursor-pointer">
-                    <div className="flex items-center space-x-6">
-                        <span className="text-slate-400">{invoice.id}</span>
-                        <span className="text-slate-400">{invoice.date}</span>
-                        <span className="text-slate-300">{invoice.client}</span>
+                <div key={invoice.id} onClick={() => handleSelect(invoice)} className="w-full bg-slate-800 space-x-4 overflow-auto p-6 rounded flex flex-wrap items-center justify-between hover:bg-slate-700 cursor-pointer">
+                    <div className="flex flex-wrap items-center space-x-2 md:space-x-6">
+                        <span className="text-slate-400 m-1">{invoice.id}</span>
+                        <span className="text-slate-400 m-1">{invoice.date}</span>
+                        <span className="text-slate-300 sm:ms-4 m-1 font-bold">{invoice.client}</span>
                     </div>
 
                     <div className="flex items-center space-x-6">

@@ -17,7 +17,7 @@ const Details = ({invoice}) => {
     }
 
     return (
-        <div className="bg-slate-800 rounded-lg p-3 md:p-8">
+        <div className="bg-slate-800 rounded-lg px-2 py-3 md:p-8">
             <div className="flex items-center justify-end space-x-2 md:space-x-4 mb-8">
                 <div className="flex items-center">
                     <button onClick={handleEdit} className="text-center justify-center md:space-x-4 flex items-center md:px-6 py-3 px-3 rounded-full bg-slate-700 hover:bg-slate-600">
@@ -64,20 +64,20 @@ const Details = ({invoice}) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8 mb-8">
+                <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
                     <div>
                         <p className="text-slate-400 md-2">Invoice Date</p>
                         <p className="font-bold md-2">{dayjs(invoice.date).format("DD/MM/YYYY")}</p>
                     </div>
 
-                    <div>
+                    <div className="sm:justify-self-center">
                         <p className="text-slate-400 md-2">Client Details</p>
                         <p className="font-bold md-2">{invoice.client}</p>
                         <p className="text-slate-400 md-2">{invoice.billTo.address}</p>
                         <p className="text-slate-400 md-2">{invoice.billTo.number}</p>
                     </div>
 
-                    <div>
+                    <div className="sm:text-right">
                         <h2 className="text-slate-400 md-2">Sent to</h2>
                         <span className="font-bold md-2">{invoice.billTo.email}</span>
                     </div>
@@ -85,13 +85,13 @@ const Details = ({invoice}) => {
 
                 <div className="bg-slate-800 rounded-lg overflow-hidden">
                     <div className="p-8 overflow-auto">
-                        <table className="w-full">
+                        <table className="table-fixed border-separate w-full">
                             <thead>
                                 <tr className="text-slate-400">
-                                    <th className="text-left">Item Name</th>
-                                    <th className="text-center">QTY</th>
-                                    <th className="text-right">Price</th>
-                                    <th className="text-right">Total</th>
+                                    <th className="text-left w-25">Item Name</th>
+                                    <th className="text-center w-25">QTY</th>
+                                    <th className="text-right w-25">Price</th>
+                                    <th className="text-right w-25">Total</th>
                                 </tr>
                             </thead>
 
@@ -108,7 +108,7 @@ const Details = ({invoice}) => {
                         </table>
                     </div>
 
-                    <div className="bg-slate-900 p-8 flex space-x-4 items-center justify-between overflow-auto">
+                    <div className="bg-slate-900 p-8 flex flex-wrap space-x-6 items-center justify-between overflow-auto">
                         <span className="text-white">Total Amount</span>
                         <span className="text-xl font-bold">{invoice.amount.toFixed(2)}€</span>
                     </div>
