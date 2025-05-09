@@ -1,9 +1,9 @@
 import { Link, Route, Routes } from "react-router-dom";
 import SignupImage from "../assets/signup.svg";
 import { ArrowDownToDotIcon } from "lucide-react";
-import Invoices from "./Invoices";
 import axios from "axios";
 import { useState } from "react";
+import Login from "./Login";
 
 const Signup = () => {
     const [formData, setFormData] = useState(() => {
@@ -31,7 +31,7 @@ const Signup = () => {
                 email: formData.email,
                 password: formData.password
             }
-            const {data: res} = axios.post('http://localhost:3000/api/user/signup', user);
+            const {data: res} = axios.post(url, user);
             console.log(res);
         } catch (error) {
             console.error("Error signing up:", error);
@@ -48,13 +48,16 @@ const Signup = () => {
             <div className="mb-4 w-full">
                 <h1 className="text-2xl font-bold text-center mb-4 text-rose-600">Sign Up</h1>
                 <form className="flex flex-col items-center">
-                    <input type="text" placeholder="Full Name" className="md:w-80 mb-4 px-6 py-2 rounded-full border"
+                    <input type="text" placeholder="Full Name" value={formData.name} className="md:w-80 mb-4 px-6 py-2 rounded-full text-white border border-white"
                         required onChange={e => setFormData({...formData, name: e.target.value})} />
-                    <input type="email" placeholder="Email" className="md:w-80 mb-4 px-6 py-2 rounded-full border"
+
+                    <input type="email" placeholder="Email" value={formData.email} className="md:w-80 mb-4 px-6 py-2 rounded-full text-white border border-white"
                         required onChange={e => setFormData({...formData, email: e.target.value})} />
-                    <input type="password" placeholder="Password" className="md:w-80 mb-4 px-6 py-2 rounded-full border"
+
+                    <input type="password" placeholder="Password" value={formData.password} className="md:w-80 mb-4 px-6 py-2 rounded-full text-white border border-white"
                         required onChange={e => setFormData({...formData, password: e.target.value})} />
-                    <input type="password" placeholder="Confirm Password" className="md:w-80 mb-4 px-6 py-2 rounded-full border" 
+
+                    <input type="password" placeholder="Confirm Password" value={formData.confirmPassword} className="md:w-80 mb-4 px-6 py-2 rounded-full text-white border border-white" 
                         required onChange={e => setFormData({...formData, confirmPassword: e.target.value})} />
                     <div className="flex justify-start items-center mb-4">
                         <ArrowDownToDotIcon className="w-6 h-6 text-rose-500" />
@@ -73,7 +76,7 @@ const Signup = () => {
             </div>
 
             <Routes className="hidden md:block mb-4 w-full">
-                <Route path="/login" element={<Invoices />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
             
         </div>
